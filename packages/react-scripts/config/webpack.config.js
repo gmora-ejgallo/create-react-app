@@ -37,7 +37,6 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
-const childProcess = require('child_process');
 const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -732,7 +731,7 @@ module.exports = function (webpackEnv) {
         ignoreFile: '.sentrycliignore',
         ignore: ['node_modules', 'webpack.prod.config.js'],
         configFile: 'sentry.properties',
-        release: childProcess.execSync('git rev-parse HEAD').toString().trim(),
+        release: process.env.SENTRY_RELEASE,
       }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
